@@ -2,708 +2,571 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#00B4D8">
 <title>Akikomo Sushi · Pedidos Online</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --cyan: #00B4D8;
-    --orange: #F4622A;
-    --orange-light: #FF8C5A;
-    --dark: #1A1A2E;
-    --dark2: #16213E;
-    --card: #ffffff;
-    --text: #1A1A2E;
-    --muted: #6B7280;
-    --border: #E5E7EB;
-    --success: #10B981;
-    --wave: #E8F7FA;
-    --shadow: 0 4px 24px rgba(0,0,0,0.10);
-    --radius: 18px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: #f0f8fb;
-    color: var(--text);
-    min-height: 100vh;
-  }
+:root {
+  --cyan: #00B4D8;
+  --cyan-dark: #0096B7;
+  --orange: #F4622A;
+  --orange-light: #FF8C5A;
+  --orange-bg: #FFF3EE;
+  --dark: #1C1C28;
+  --card-bg: #ffffff;
+  --page-bg: #F2F8FB;
+  --muted: #8492A6;
+  --border: #E8EDF2;
+  --radius-sm: 12px;
+  --radius: 18px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 2px 10px rgba(0,0,0,0.07);
+  --shadow: 0 4px 20px rgba(0,0,0,0.10);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--page-bg);
+  color: var(--dark);
+  min-height: 100vh;
+  /* Solo espacio para la barra inferior compacta (~80px) */
+  padding-bottom: calc(82px + var(--safe-bottom));
+  -webkit-font-smoothing: antialiased;
+}
 
-  /* HEADER */
-  header {
-    background: linear-gradient(135deg, var(--cyan) 0%, #0096B7 100%);
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-  }
-  .header-wave {
-    position: absolute; bottom: -2px; left: 0; width: 100%; z-index: 1;
-  }
-  .header-inner {
-    position: relative; z-index: 2;
-    display: flex; align-items: center; justify-content: center;
-    gap: 18px; padding: 28px 20px 48px;
-  }
-  .logo-circle {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: #fff; overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .logo-circle img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-  .header-text h1 {
-    font-size: 2rem; font-weight: 900; color: #fff;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.15); line-height: 1.1;
-  }
-  .header-text p { font-size: 0.95rem; color: rgba(255,255,255,0.85); font-weight: 600; margin-top: 2px; }
+/* ── HEADER ── */
+.app-header {
+  background: linear-gradient(150deg, var(--cyan) 0%, var(--cyan-dark) 100%);
+  padding: 20px 16px 36px;
+  position: relative; overflow: hidden;
+}
+.app-header::after {
+  content: ''; position: absolute;
+  bottom: -1px; left: 0; right: 0; height: 28px;
+  background: var(--page-bg); border-radius: 28px 28px 0 0;
+}
+.header-fish { position: absolute; right: -8px; top: 50%; transform: translateY(-50%); font-size: 5rem; opacity: 0.1; pointer-events: none; }
+.header-content { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+.logo-ring {
+  width: 68px; height: 68px; border-radius: 50%; background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.20); overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.header-info h1 { font-size: 1.5rem; font-weight: 900; color: #fff; line-height: 1.1; }
+.header-info p  { font-size: 0.82rem; color: rgba(255,255,255,0.82); font-weight: 600; margin-top: 3px; }
 
-  /* BRANCH SELECTOR */
-  .branch-section {
-    background: #fff;
-    padding: 22px 20px 18px;
-    text-align: center;
-    border-bottom: 2px solid var(--border);
-  }
-  .branch-label {
-    font-size: 0.8rem; font-weight: 700; color: var(--muted); letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 12px;
-  }
-  .branch-btns {
-    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
-  }
-  .branch-btn {
-    border: 2.5px solid var(--border);
-    background: #fff; border-radius: 50px;
-    padding: 10px 22px; font-family: 'Nunito', sans-serif;
-    font-size: 0.95rem; font-weight: 700; color: var(--muted);
-    cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .branch-btn:hover { border-color: var(--orange); color: var(--orange); }
-  .branch-btn.active {
-    background: var(--orange); border-color: var(--orange);
-    color: #fff; box-shadow: 0 4px 14px rgba(244,98,42,0.30);
-  }
-  .branch-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-  .branch-address {
-    margin-top: 10px; font-size: 0.82rem; color: var(--muted); font-weight: 600;
-    display: flex; align-items: center; justify-content: center; gap: 5px;
-  }
+/* ── BRANCH PICKER ── */
+.branch-section { padding: 18px 14px 14px; }
+.section-label { font-size: 0.7rem; font-weight: 800; color: var(--muted); letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 10px; }
+.branch-pills { display: flex; gap: 10px; }
+.branch-pill {
+  flex: 1; padding: 13px 10px; border-radius: var(--radius);
+  border: 2.5px solid var(--border); background: var(--card-bg);
+  font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 800;
+  color: var(--muted); cursor: pointer; transition: all 0.2s ease;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  box-shadow: var(--shadow-sm);
+}
+.branch-pill .pi { font-size: 1.4rem; }
+.branch-pill .pn { font-size: 0.92rem; }
+.branch-pill .pa { font-size: 0.67rem; font-weight: 600; color: var(--muted); text-align: center; line-height: 1.3; }
+.branch-pill.active { border-color: var(--orange); color: var(--orange); background: var(--orange-bg); box-shadow: 0 4px 16px rgba(244,98,42,0.20); }
+.branch-pill.active .pa { color: var(--orange-light); }
 
-  /* MENU */
-  #menu-section { display: none; }
-  #menu-section.visible { display: block; }
+/* ── EMPTY STATE ── */
+#empty-state { text-align: center; padding: 50px 32px; }
+#empty-state .es-icon { font-size: 3.5rem; margin-bottom: 14px; }
+#empty-state h2 { font-size: 1.2rem; font-weight: 900; margin-bottom: 6px; }
+#empty-state p  { font-size: 0.88rem; color: var(--muted); font-weight: 600; line-height: 1.5; }
 
-  /* CATEGORY TABS */
-  .tabs-wrapper {
-    background: #fff; position: sticky; top: 0; z-index: 100;
-    border-bottom: 2px solid var(--border);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-  }
-  .tabs {
-    display: flex; overflow-x: auto; gap: 0;
-    scrollbar-width: none; padding: 0 8px;
-  }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab-btn {
-    flex-shrink: 0; padding: 14px 18px;
-    font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 700;
-    color: var(--muted); background: none; border: none;
-    border-bottom: 3px solid transparent; cursor: pointer;
-    transition: all 0.2s; white-space: nowrap;
-  }
-  .tab-btn:hover { color: var(--orange); }
-  .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+/* ── MENU ── */
+#menu-section { display: none; }
+#menu-section.visible { display: block; }
 
-  /* PRODUCT GRID */
-  .category-section { display: none; padding: 20px 16px; }
-  .category-section.active { display: block; }
-  .category-title {
-    font-size: 1.3rem; font-weight: 900; color: var(--dark);
-    margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
-  }
-  .category-title span { font-size: 1.5rem; }
-  .products-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
-  }
-  .product-card {
-    background: #fff; border-radius: var(--radius);
-    padding: 16px; box-shadow: var(--shadow);
-    border: 2px solid transparent; transition: all 0.2s;
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .product-card:hover { border-color: var(--orange); transform: translateY(-2px); }
-  .product-card.in-cart { border-color: var(--orange); background: #FFF5F2; }
-  .product-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-  .product-name { font-size: 0.97rem; font-weight: 800; color: var(--dark); line-height: 1.3; }
-  .product-desc { font-size: 0.78rem; color: var(--muted); font-weight: 600; font-style: italic; }
-  .product-price {
-    font-size: 1.05rem; font-weight: 900; color: var(--orange); white-space: nowrap;
-  }
-  .qty-control {
-    display: flex; align-items: center; gap: 8px; margin-top: 4px;
-  }
-  .qty-btn {
-    width: 30px; height: 30px; border-radius: 50%;
-    border: 2.5px solid var(--orange); background: #fff;
-    color: var(--orange); font-size: 1.2rem; font-weight: 700;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s; font-family: 'Nunito', sans-serif;
-    line-height: 1;
-  }
-  .qty-btn:hover { background: var(--orange); color: #fff; }
-  .qty-display {
-    font-size: 1rem; font-weight: 800; min-width: 24px; text-align: center;
-    color: var(--dark);
-  }
-  .note-btn {
-    font-size: 0.75rem; color: var(--cyan); font-weight: 700;
-    background: none; border: none; cursor: pointer; font-family: 'Nunito', sans-serif;
-    padding: 0; text-decoration: underline; margin-left: auto;
-  }
-  .note-input {
-    width: 100%; border: 1.5px solid var(--border); border-radius: 10px;
-    padding: 7px 10px; font-family: 'Nunito', sans-serif; font-size: 0.82rem;
-    color: var(--dark); resize: none; margin-top: 2px;
-    display: none;
-  }
-  .note-input.visible { display: block; }
-  .note-input:focus { outline: none; border-color: var(--cyan); }
+/* TABS */
+.tabs-bar { background: var(--card-bg); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.tabs-scroll { display: flex; overflow-x: auto; gap: 2px; scrollbar-width: none; padding: 5px 8px; }
+.tabs-scroll::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0; padding: 9px 15px; border-radius: 50px;
+  border: none; background: none; font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem; font-weight: 700; color: var(--muted);
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.tab-btn.active { background: var(--orange); color: #fff; box-shadow: 0 3px 12px rgba(244,98,42,0.30); }
 
-  /* ORDER FORM */
-  .order-form-wrap {
-    background: #fff; border-top: 3px solid var(--orange);
-    padding: 20px 16px; position: sticky; bottom: 0; z-index: 90;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.10);
-  }
-  .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 140px; }
-  .form-group label { font-size: 0.78rem; font-weight: 800; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
-  .form-group input, .form-group textarea {
-    border: 2px solid var(--border); border-radius: 12px;
-    padding: 10px 14px; font-family: 'Nunito', sans-serif;
-    font-size: 0.92rem; font-weight: 600; color: var(--dark);
-    transition: border-color 0.2s;
-  }
-  .form-group input:focus, .form-group textarea:focus {
-    outline: none; border-color: var(--cyan);
-  }
-  .form-group textarea { resize: none; height: 60px; }
+/* PANELS */
+.cat-panel { display: none; padding: 16px 14px 8px; }
+.cat-panel.active { display: block; }
+.cat-heading { font-size: 1.1rem; font-weight: 900; color: var(--dark); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
 
-  /* ORDER SUMMARY */
-  .summary-card {
-    background: #fff; border-radius: var(--radius);
-    margin: 16px 16px 0; box-shadow: var(--shadow);
-    border: 2px solid var(--border); overflow: hidden;
-  }
-  .summary-header {
-    background: linear-gradient(135deg, var(--orange), var(--orange-light));
-    padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;
-  }
-  .summary-header h3 { font-size: 1rem; font-weight: 900; color: #fff; }
-  .item-count-badge {
-    background: rgba(255,255,255,0.25); color: #fff; border-radius: 50px;
-    padding: 3px 12px; font-size: 0.82rem; font-weight: 800;
-  }
-  .summary-body { padding: 16px 20px; }
-  .summary-empty {
-    text-align: center; color: var(--muted); font-weight: 600;
-    font-size: 0.9rem; padding: 8px 0;
-  }
-  .summary-item {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    padding: 8px 0; border-bottom: 1px solid var(--border); gap: 8px;
-  }
-  .summary-item:last-child { border-bottom: none; }
-  .summary-item-name { font-size: 0.88rem; font-weight: 700; color: var(--dark); }
-  .summary-item-note { font-size: 0.75rem; color: var(--muted); font-style: italic; }
-  .summary-item-price { font-size: 0.9rem; font-weight: 800; color: var(--orange); white-space: nowrap; }
-  .summary-total {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 14px 20px; background: #FFF5F2;
-    border-top: 2px solid var(--border);
-  }
-  .summary-total span { font-size: 1rem; font-weight: 700; color: var(--muted); }
-  .summary-total strong { font-size: 1.3rem; font-weight: 900; color: var(--orange); }
+/* PRODUCT CARDS */
+.products-list { display: flex; flex-direction: column; gap: 10px; }
+@media (min-width: 580px) { .products-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } }
 
-  /* WHATSAPP BUTTON */
-  .wa-btn-wrap { padding: 14px 16px 4px; }
-  .wa-btn {
-    width: 100%; padding: 16px; border-radius: 16px;
-    background: linear-gradient(135deg, #25D366, #128C7E);
-    color: #fff; font-family: 'Nunito', sans-serif;
-    font-size: 1.05rem; font-weight: 900; border: none;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    gap: 10px; box-shadow: 0 4px 20px rgba(37,211,102,0.35);
-    transition: all 0.2s; letter-spacing: 0.3px;
-  }
-  .wa-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.45); }
-  .wa-btn:active { transform: translateY(0); }
-  .wa-btn svg { width: 22px; height: 22px; fill: #fff; }
-  .wa-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.p-card {
+  background: var(--card-bg); border-radius: var(--radius);
+  border: 2px solid var(--border); padding: 14px 14px 12px;
+  box-shadow: var(--shadow-sm); transition: border-color 0.18s, background 0.18s;
+  display: flex; flex-direction: column; gap: 10px;
+  animation: fadeUp 0.25s ease both;
+}
+.p-card.incart { border-color: var(--orange); background: var(--orange-bg); }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.p-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.p-name { font-size: 0.95rem; font-weight: 800; line-height: 1.3; }
+.p-desc { font-size: 0.74rem; color: var(--muted); font-weight: 600; margin-top: 2px; font-style: italic; }
+.p-price { font-size: 1rem; font-weight: 900; color: var(--orange); white-space: nowrap; }
+.p-card-bottom { display: flex; align-items: center; justify-content: space-between; }
+.qty-wrap { display: flex; align-items: center; background: var(--page-bg); border-radius: 50px; border: 2px solid var(--border); overflow: hidden; }
+.p-card.incart .qty-wrap { background: #fff; border-color: var(--orange); }
+.qty-btn {
+  width: 44px; height: 42px; border: none; background: none;
+  font-family: 'Nunito', sans-serif; font-size: 1.3rem; font-weight: 700;
+  color: var(--orange); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.12s;
+}
+.qty-btn:active { background: rgba(244,98,42,0.13); }
+.qty-num { min-width: 36px; text-align: center; font-size: 1rem; font-weight: 900; color: var(--dark); }
+.note-toggle { font-size: 0.76rem; font-weight: 700; color: var(--cyan); background: none; border: none; cursor: pointer; font-family: 'Nunito', sans-serif; padding: 6px 0; }
+.note-field { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 9px 12px; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: var(--dark); resize: none; height: 58px; display: none; }
+.note-field.show { display: block; }
+.note-field:focus { outline: none; border-color: var(--cyan); }
 
-  /* FOOTER */
-  footer {
-    text-align: center; padding: 20px 16px 28px;
-    font-size: 0.78rem; color: var(--muted); font-weight: 600;
-  }
-  footer a { color: var(--cyan); text-decoration: none; font-weight: 700; }
-  footer a:hover { text-decoration: underline; }
+/* ── SUMMARY ── */
+.summary-wrap { margin: 8px 14px 14px; }
+.summary-card { background: var(--card-bg); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; border: 2px solid var(--border); }
+.summary-head { background: linear-gradient(135deg, var(--orange), var(--orange-light)); padding: 13px 18px; display: flex; justify-content: space-between; align-items: center; }
+.summary-head h3 { font-size: 0.95rem; font-weight: 900; color: #fff; }
+.badge { background: rgba(255,255,255,0.25); color: #fff; border-radius: 50px; padding: 3px 12px; font-size: 0.78rem; font-weight: 800; }
+.summary-body { padding: 12px 18px; }
+.s-empty { text-align: center; color: var(--muted); font-weight: 600; font-size: 0.85rem; padding: 6px 0; }
+.s-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--border); gap: 8px; }
+.s-row:last-child { border-bottom: none; }
+.s-name { font-size: 0.85rem; font-weight: 700; }
+.s-note { font-size: 0.72rem; color: var(--muted); font-style: italic; margin-top: 1px; }
+.s-price { font-size: 0.88rem; font-weight: 900; color: var(--orange); white-space: nowrap; }
+.summary-foot { display: flex; justify-content: space-between; align-items: center; padding: 13px 18px; background: var(--orange-bg); border-top: 2px solid rgba(244,98,42,0.15); }
+.summary-foot span { font-size: 0.85rem; font-weight: 700; color: var(--muted); }
+.summary-foot strong { font-size: 1.3rem; font-weight: 900; color: var(--orange); }
 
-  /* BRANCH SCREEN */
-  #branch-screen {
-    display: flex; align-items: center; justify-content: center;
-    min-height: 30vh; padding: 40px 16px;
-  }
-  .choose-branch-card {
-    text-align: center; max-width: 400px;
-  }
-  .choose-branch-card .fish-emoji { font-size: 3rem; margin-bottom: 12px; }
-  .choose-branch-card h2 { font-size: 1.4rem; font-weight: 900; color: var(--dark); margin-bottom: 6px; }
-  .choose-branch-card p { color: var(--muted); font-weight: 600; font-size: 0.9rem; }
+/* ── FOOTER ── */
+footer { text-align: center; padding: 14px 16px 20px; font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+footer a { color: var(--cyan); text-decoration: none; font-weight: 700; }
 
-  /* TOAST */
-  .toast {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--success); color: #fff; border-radius: 50px;
-    padding: 12px 24px; font-size: 0.9rem; font-weight: 800;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    opacity: 0; transition: all 0.3s; z-index: 9999; white-space: nowrap;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* ── STICKY BOTTOM BAR (compacta, solo botón + total) ── */
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+  background: var(--card-bg); border-top: 2px solid var(--border);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+  padding: 10px 14px calc(10px + var(--safe-bottom));
+}
+.wa-btn {
+  width: 100%; padding: 15px; border-radius: var(--radius);
+  background: linear-gradient(135deg, #25D366, #1DB954);
+  color: #fff; font-family: 'Nunito', sans-serif;
+  font-size: 1rem; font-weight: 900; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 4px 18px rgba(37,211,102,0.38);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.wa-btn:active { transform: scale(0.98); }
+.wa-btn:disabled { background: #CBD5E0; box-shadow: none; cursor: not-allowed; }
+.wa-btn svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; }
+/* Mini total en la barra */
+.bar-total {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px; padding: 0 2px;
+}
+.bar-total-label { font-size: 0.78rem; font-weight: 700; color: var(--muted); }
+.bar-total-amt   { font-size: 1rem; font-weight: 900; color: var(--orange); }
 
-  @media(max-width: 480px) {
-    .header-text h1 { font-size: 1.5rem; }
-    .products-grid { grid-template-columns: 1fr; }
-    .form-row { flex-direction: column; }
-  }
+/* ── MODAL SHEET ── */
+.sheet-overlay {
+  position: fixed; inset: 0; z-index: 800;
+  background: rgba(0,0,0,0.45);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+.sheet-overlay.open { opacity: 1; pointer-events: all; }
+
+.sheet {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 900;
+  background: var(--card-bg);
+  border-radius: 24px 24px 0 0;
+  padding: 0 16px calc(20px + var(--safe-bottom));
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+  max-height: 90vh; overflow-y: auto;
+}
+.sheet.open { transform: translateY(0); }
+
+.sheet-handle {
+  width: 40px; height: 4px; background: var(--border);
+  border-radius: 4px; margin: 12px auto 18px;
+}
+.sheet-title {
+  font-size: 1.1rem; font-weight: 900; color: var(--dark);
+  margin-bottom: 18px; text-align: center;
+}
+
+/* Form dentro del sheet */
+.sh-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+.sh-group label { font-size: 0.7rem; font-weight: 800; color: var(--muted); letter-spacing: 0.8px; text-transform: uppercase; }
+.sh-group input, .sh-group textarea {
+  border: 2px solid var(--border); border-radius: var(--radius-sm);
+  padding: 12px 14px; font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem; font-weight: 600; color: var(--dark);
+  background: var(--page-bg); width: 100%; -webkit-appearance: none;
+  transition: border-color 0.18s;
+}
+.sh-group input:focus, .sh-group textarea:focus { outline: none; border-color: var(--cyan); background: #fff; }
+.sh-group textarea { resize: none; height: 72px; }
+
+.sh-row { display: flex; gap: 10px; }
+.sh-row .sh-group { flex: 1; }
+
+/* Confirm button inside sheet */
+.confirm-btn {
+  width: 100%; padding: 15px; border-radius: var(--radius);
+  background: linear-gradient(135deg, #25D366, #1DB954);
+  color: #fff; font-family: 'Nunito', sans-serif;
+  font-size: 1rem; font-weight: 900; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 4px 18px rgba(37,211,102,0.38);
+  transition: transform 0.12s; margin-top: 6px;
+}
+.confirm-btn:active { transform: scale(0.98); }
+.confirm-btn svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; }
+
+/* Sheet mini resumen */
+.sheet-summary {
+  background: var(--orange-bg); border-radius: var(--radius-sm);
+  padding: 12px 14px; margin-bottom: 16px;
+  border: 1.5px solid rgba(244,98,42,0.18);
+}
+.sheet-summary-title { font-size: 0.72rem; font-weight: 800; color: var(--orange); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; }
+.ss-row { display: flex; justify-content: space-between; font-size: 0.83rem; font-weight: 700; padding: 3px 0; color: var(--dark); }
+.ss-total { display: flex; justify-content: space-between; font-size: 0.95rem; font-weight: 900; padding-top: 8px; margin-top: 6px; border-top: 1.5px solid rgba(244,98,42,0.2); color: var(--orange); }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: calc(90px + var(--safe-bottom)); left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--dark); color: #fff; border-radius: 50px;
+  padding: 11px 22px; font-size: 0.85rem; font-weight: 700;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  opacity: 0; transition: all 0.25s; z-index: 9999;
+  white-space: nowrap; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <div class="logo-circle">
-      <!-- Logo placeholder - replace src with actual logo -->
+<header class="app-header">
+  <div class="header-fish">🐟</div>
+  <div class="header-content">
+    <div class="logo-ring">
       <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
         <circle cx="40" cy="40" r="40" fill="#00B4D8"/>
-        <ellipse cx="40" cy="32" rx="22" ry="14" fill="#F4622A"/>
-        <ellipse cx="40" cy="34" rx="12" ry="8" fill="#fff" opacity="0.3"/>
-        <path d="M18 38 Q40 50 62 38 Q40 60 18 38Z" fill="#E8401A"/>
-        <text x="50%" y="62" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-weight="bold" font-size="13" fill="#1A1A2E">Akikomo</text>
-        <text x="50%" y="73" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#1A1A2E" letter-spacing="2">sushi</text>
+        <ellipse cx="40" cy="30" rx="22" ry="13" fill="#F4622A"/>
+        <ellipse cx="40" cy="31" rx="11" ry="7" fill="#fff" opacity="0.25"/>
+        <circle cx="50" cy="26" r="2.5" fill="#1A1A2E"/>
+        <path d="M18 36 Q40 50 62 36 Q40 58 18 36Z" fill="#D94F1E"/>
+        <text x="40" y="63" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-weight="bold" font-size="11" fill="#fff">Akikomo</text>
+        <text x="40" y="73" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" fill="rgba(255,255,255,0.8)" letter-spacing="2.5">sushi</text>
       </svg>
     </div>
-    <div class="header-text">
+    <div class="header-info">
       <h1>Akikomo Sushi</h1>
       <p>🍣 Pedidos Online · Retiro en local</p>
     </div>
   </div>
-  <svg class="header-wave" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,20 C360,40 720,0 1440,20 L1440,40 L0,40 Z" fill="#f0f8fb"/>
-  </svg>
 </header>
 
-<!-- BRANCH SELECTOR -->
+<!-- BRANCH PICKER -->
 <div class="branch-section">
-  <div class="branch-label">📍 Elige tu sucursal</div>
-  <div class="branch-btns">
-    <button class="branch-btn" onclick="selectBranch('maipu')" id="btn-maipu">
-      <span class="dot"></span> Maipú
+  <div class="section-label">📍 Elige tu sucursal</div>
+  <div class="branch-pills">
+    <button class="branch-pill" id="pill-maipu" onclick="selectBranch('maipu')">
+      <span class="pi">🏪</span><span class="pn">Maipú</span><span class="pa">Av. Alessandri 615</span>
     </button>
-    <button class="branch-btn" onclick="selectBranch('cerronavia')" id="btn-cerronavia">
-      <span class="dot"></span> Cerro Navia
+    <button class="branch-pill" id="pill-cerronavia" onclick="selectBranch('cerronavia')">
+      <span class="pi">🏪</span><span class="pn">Cerro Navia</span><span class="pa">R. Petersen 1680</span>
     </button>
-  </div>
-  <div class="branch-address" id="branch-address"></div>
-</div>
-
-<!-- CHOOSE BRANCH PROMPT -->
-<div id="branch-screen">
-  <div class="choose-branch-card">
-    <div class="fish-emoji">🐟</div>
-    <h2>¿Desde dónde vas a pedir?</h2>
-    <p>Selecciona una sucursal arriba para ver el menú y comenzar tu pedido.</p>
   </div>
 </div>
 
-<!-- MENU SECTION -->
+<!-- EMPTY STATE -->
+<div id="empty-state">
+  <div class="es-icon">🍱</div>
+  <h2>¿Desde dónde quieres pedir?</h2>
+  <p>Selecciona tu sucursal arriba<br>para ver el menú completo.</p>
+</div>
+
+<!-- MENU -->
 <div id="menu-section">
-
   <!-- TABS -->
-  <div class="tabs-wrapper">
-    <div class="tabs" id="tabs">
-      <button class="tab-btn active" onclick="showCategory('entradas', this)">🥟 Entradas</button>
-      <button class="tab-btn" onclick="showCategory('rolls-frios', this)">🍣 Rolls Fríos</button>
-      <button class="tab-btn" onclick="showCategory('rolls-calientes', this)">🔥 Rolls Calientes</button>
-      <button class="tab-btn" onclick="showCategory('sashimi', this)">🐟 Sashimi & Nigiri</button>
-      <button class="tab-btn" onclick="showCategory('combos', this)">🎁 Combos</button>
-      <button class="tab-btn" onclick="showCategory('bebidas', this)">🥤 Bebidas & Salsas</button>
+  <div class="tabs-bar">
+    <div class="tabs-scroll">
+      <button class="tab-btn active" onclick="showCat('entradas',this)">🥟 Entradas</button>
+      <button class="tab-btn"        onclick="showCat('rolls-frios',this)">🍣 Rolls Fríos</button>
+      <button class="tab-btn"        onclick="showCat('rolls-cal',this)">🔥 Rolls Calientes</button>
+      <button class="tab-btn"        onclick="showCat('sashimi',this)">🐟 Sashimi</button>
+      <button class="tab-btn"        onclick="showCat('combos',this)">🎁 Combos</button>
+      <button class="tab-btn"        onclick="showCat('bebidas',this)">🥤 Bebidas</button>
     </div>
   </div>
 
-  <!-- ENTRADAS -->
-  <div class="category-section active" id="cat-entradas">
-    <div class="category-title"><span>🥟</span> Entradas</div>
-    <div class="products-grid" id="grid-entradas"></div>
-  </div>
+  <div class="cat-panel active" id="cat-entradas"><div class="cat-heading"><span>🥟</span> Entradas</div><div class="products-list" id="list-entradas"></div></div>
+  <div class="cat-panel" id="cat-rolls-frios"><div class="cat-heading"><span>🍣</span> Rolls Envueltos (Fríos)</div><div class="products-list" id="list-rolls-frios"></div></div>
+  <div class="cat-panel" id="cat-rolls-cal"><div class="cat-heading"><span>🔥</span> Rolls Calientes (Fritos/Panko)</div><div class="products-list" id="list-rolls-cal"></div></div>
+  <div class="cat-panel" id="cat-sashimi"><div class="cat-heading"><span>🐟</span> Sashimi y Nigiri</div><div class="products-list" id="list-sashimi"></div></div>
+  <div class="cat-panel" id="cat-combos"><div class="cat-heading"><span>🎁</span> Promociones y Combos</div><div class="products-list" id="list-combos"></div></div>
+  <div class="cat-panel" id="cat-bebidas"><div class="cat-heading"><span>🥤</span> Bebidas y Salsas</div><div class="products-list" id="list-bebidas"></div></div>
 
-  <!-- ROLLS FRIOS -->
-  <div class="category-section" id="cat-rolls-frios">
-    <div class="category-title"><span>🍣</span> Rolls Envueltos (Fríos)</div>
-    <div class="products-grid" id="grid-rolls-frios"></div>
-  </div>
-
-  <!-- ROLLS CALIENTES -->
-  <div class="category-section" id="cat-rolls-calientes">
-    <div class="category-title"><span>🔥</span> Rolls Calientes (Fritos/Panko)</div>
-    <div class="products-grid" id="grid-rolls-calientes"></div>
-  </div>
-
-  <!-- SASHIMI -->
-  <div class="category-section" id="cat-sashimi">
-    <div class="category-title"><span>🐟</span> Sashimi y Nigiri</div>
-    <div class="products-grid" id="grid-sashimi"></div>
-  </div>
-
-  <!-- COMBOS -->
-  <div class="category-section" id="cat-combos">
-    <div class="category-title"><span>🎁</span> Promociones y Combos</div>
-    <div class="products-grid" id="grid-combos"></div>
-  </div>
-
-  <!-- BEBIDAS -->
-  <div class="category-section" id="cat-bebidas">
-    <div class="category-title"><span>🥤</span> Bebidas y Salsas</div>
-    <div class="products-grid" id="grid-bebidas"></div>
-  </div>
-
-  <!-- ORDER SUMMARY -->
-  <div class="summary-card" id="summary-card">
-    <div class="summary-header">
-      <h3>🛒 Tu pedido</h3>
-      <span class="item-count-badge" id="item-count">0 items</span>
-    </div>
-    <div class="summary-body" id="summary-body">
-      <div class="summary-empty">Tu pedido está vacío. ¡Elige tus rolls! 🍱</div>
-    </div>
-    <div class="summary-total">
-      <span>Total a pagar</span>
-      <strong id="total-price">$0</strong>
-    </div>
-  </div>
-
-  <!-- WHATSAPP BUTTON -->
-  <div class="wa-btn-wrap">
-    <button class="wa-btn" id="wa-btn" onclick="sendWhatsApp()" disabled>
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-      </svg>
-      Enviar pedido por WhatsApp
-    </button>
-  </div>
-
-  <!-- ORDER FORM -->
-  <div class="order-form-wrap">
-    <div class="form-row">
-      <div class="form-group">
-        <label>Tu nombre</label>
-        <input type="text" id="customer-name" placeholder="Ej: Valentina" maxlength="50">
+  <!-- SUMMARY -->
+  <div class="summary-wrap">
+    <div class="summary-card">
+      <div class="summary-head">
+        <h3>🛒 Tu pedido</h3>
+        <span class="badge" id="item-badge">0 items</span>
       </div>
-      <div class="form-group">
-        <label>Hora de retiro</label>
-        <input type="time" id="pickup-time">
+      <div class="summary-body" id="summary-body">
+        <div class="s-empty">Aún no has elegido nada 🍱</div>
       </div>
-      <div class="form-group" style="flex: 2; min-width: 200px;">
-        <label>Instrucciones extra (opcional)</label>
-        <textarea id="extra-notes" placeholder="Ej: Sin picante, extra salsa..."></textarea>
+      <div class="summary-foot">
+        <span>Total a pagar</span>
+        <strong id="total-amt">$0</strong>
       </div>
     </div>
   </div>
 
+  <footer>Impulsado por <a href="https://www.instagram.com/wapiapp?igsh=aHAweGN0dmkxcG92" target="_blank">wapi · @wapiapp</a></footer>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <p>Impulsado por <a href="https://www.instagram.com/wapiapp?igsh=aHAweGN0dmkxcG92" target="_blank">wapi · @wapiapp</a></p>
-</footer>
+<!-- BARRA INFERIOR COMPACTA -->
+<div class="bottom-bar">
+  <div class="bar-total">
+    <span class="bar-total-label">Total del pedido</span>
+    <span class="bar-total-amt" id="bar-total-amt">$0</span>
+  </div>
+  <button class="wa-btn" id="wa-btn" onclick="openSheet()" disabled>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Enviar pedido por WhatsApp
+  </button>
+</div>
 
-<!-- TOAST -->
+<!-- OVERLAY -->
+<div class="sheet-overlay" id="overlay" onclick="closeSheet()"></div>
+
+<!-- SHEET / MODAL -->
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title">🍣 Confirmar pedido</div>
+
+  <!-- Mini resumen dentro del sheet -->
+  <div class="sheet-summary">
+    <div class="sheet-summary-title">Resumen</div>
+    <div id="sheet-items"></div>
+    <div class="ss-total">
+      <span>Total</span><span id="sheet-total">$0</span>
+    </div>
+  </div>
+
+  <!-- Datos del cliente -->
+  <div class="sh-row">
+    <div class="sh-group">
+      <label>Tu nombre</label>
+      <input type="text" id="inp-name" placeholder="Ej: Valentina" maxlength="50" autocomplete="given-name">
+    </div>
+    <div class="sh-group" style="max-width:140px;">
+      <label>Hora de retiro</label>
+      <input type="time" id="inp-time">
+    </div>
+  </div>
+  <div class="sh-group">
+    <label>Instrucciones extra (opcional)</label>
+    <textarea id="inp-extra" placeholder="Ej: Sin picante, extra salsa, alergia a..."></textarea>
+  </div>
+
+  <button class="confirm-btn" onclick="sendWA()">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Confirmar y enviar por WhatsApp
+  </button>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// =====================
-// DATA
-// =====================
 const BRANCHES = {
-  maipu: {
-    name: 'Maipú',
-    address: 'Av. Pdte. Jorge Alessandri Rodríguez 615, Maipú',
-    phone: '+56986253841'
-  },
-  cerronavia: {
-    name: 'Cerro Navia',
-    address: 'Rolando Petersen 1680, Cerro Navia',
-    phone: '+56986253841'
-  }
+  maipu:      { name:'Maipú',       phone:'56986253841' },
+  cerronavia: { name:'Cerro Navia', phone:'56986253841' }
 };
 
 const MENU = {
-  entradas: [
-    { id: 'e1', name: 'Gyozas Cerdo', desc: '5 unidades', price: 4500 },
-    { id: 'e2', name: 'Gyozas Camarón', desc: '5 unidades', price: 4900 },
-    { id: 'e3', name: 'Ebi Tempura', desc: '5 unidades', price: 6900 },
-    { id: 'e4', name: 'Edamame', desc: 'Soya al vapor', price: 3500 },
-    { id: 'e5', name: 'Harumaki Queso', desc: '4 unidades', price: 3800 },
-  ],
-  'rolls-frios': [
-    { id: 'rf1', name: 'Avocado Roll', desc: 'Salmón/Queso en palta', price: 8200 },
-    { id: 'rf2', name: 'Sake Roll', desc: 'Camarón/Palta en salmón', price: 8500 },
-    { id: 'rf3', name: 'Cheese Roll', desc: 'Camarón/Palta en queso crema', price: 7900 },
-    { id: 'rf4', name: 'California Roll', desc: 'Sucedáneo jaiba/Palta en sésamo', price: 6500 },
-    { id: 'rf5', name: 'Rainbow Roll', desc: 'Mix pescados/Palta', price: 9100 },
-  ],
-  'rolls-calientes': [
-    { id: 'rc1', name: 'Tori Hot Roll', desc: 'Pollo/Queso/Cebollín', price: 7200 },
-    { id: 'rc2', name: 'Ebi Furai Roll', desc: 'Camarón/Queso/Masago', price: 7500 },
-    { id: 'rc3', name: 'Champy Roll', desc: 'Champiñón/Queso/Pimentón', price: 6800 },
-    { id: 'rc4', name: 'Kani Hot Roll', desc: 'Sucedáneo jaiba/Queso/Cebollín', price: 7000 },
-  ],
-  sashimi: [
-    { id: 's1', name: 'Sashimi Salmón', desc: '9 cortes', price: 9500 },
-    { id: 's2', name: 'Sashimi Atún', desc: '9 cortes', price: 10500 },
-    { id: 's3', name: 'Nigiri Ebi', desc: '2 unidades', price: 3600 },
-    { id: 's4', name: 'Nigiri Salmón', desc: '2 unidades', price: 3800 },
-    { id: 's5', name: 'Hosomaki Pepino', desc: '6 piezas', price: 3900 },
-  ],
-  combos: [
-    { id: 'c1', name: 'Promo 30 Piezas', desc: '3 rolls mixtos', price: 18500 },
-    { id: 'c2', name: 'Promo 40 Piezas', desc: '4 rolls fritos', price: 22000 },
-    { id: 'c3', name: 'Family Pack 60 Piezas', desc: 'Mix variado', price: 32000 },
-    { id: 'c4', name: 'Individual Pack', desc: '12 piezas + bebida', price: 11500 },
-  ],
-  bebidas: [
-    { id: 'b1', name: 'Bebida Lata 350ml', desc: '', price: 1800 },
-    { id: 'b2', name: 'Agua Mineral 500ml', desc: '', price: 1500 },
-    { id: 'b3', name: 'Salsa Unagi Extra', desc: '', price: 800 },
-    { id: 'b4', name: 'Salsa Spicy Extra', desc: '', price: 800 },
-    { id: 'b5', name: 'Porción Jengibre/Wasabi', desc: '', price: 500 },
-  ]
+  entradas:     [{id:'e1',name:'Gyozas Cerdo',desc:'5 unidades',price:4500},{id:'e2',name:'Gyozas Camarón',desc:'5 unidades',price:4900},{id:'e3',name:'Ebi Tempura',desc:'5 unidades',price:6900},{id:'e4',name:'Edamame',desc:'Soya al vapor',price:3500},{id:'e5',name:'Harumaki Queso',desc:'4 unidades',price:3800}],
+  'rolls-frios':[{id:'rf1',name:'Avocado Roll',desc:'Salmón/Queso en palta',price:8200},{id:'rf2',name:'Sake Roll',desc:'Camarón/Palta en salmón',price:8500},{id:'rf3',name:'Cheese Roll',desc:'Camarón/Palta en queso crema',price:7900},{id:'rf4',name:'California Roll',desc:'Sucedáneo jaiba/Palta en sésamo',price:6500},{id:'rf5',name:'Rainbow Roll',desc:'Mix pescados/Palta',price:9100}],
+  'rolls-cal':  [{id:'rc1',name:'Tori Hot Roll',desc:'Pollo/Queso/Cebollín',price:7200},{id:'rc2',name:'Ebi Furai Roll',desc:'Camarón/Queso/Masago',price:7500},{id:'rc3',name:'Champy Roll',desc:'Champiñón/Queso/Pimentón',price:6800},{id:'rc4',name:'Kani Hot Roll',desc:'Sucedáneo jaiba/Queso/Cebollín',price:7000}],
+  sashimi:      [{id:'s1',name:'Sashimi Salmón',desc:'9 cortes',price:9500},{id:'s2',name:'Sashimi Atún',desc:'9 cortes',price:10500},{id:'s3',name:'Nigiri Ebi',desc:'2 unidades',price:3600},{id:'s4',name:'Nigiri Salmón',desc:'2 unidades',price:3800},{id:'s5',name:'Hosomaki Pepino',desc:'6 piezas',price:3900}],
+  combos:       [{id:'c1',name:'Promo 30 Piezas',desc:'3 rolls mixtos',price:18500},{id:'c2',name:'Promo 40 Piezas',desc:'4 rolls fritos',price:22000},{id:'c3',name:'Family Pack 60 Piezas',desc:'Mix variado',price:32000},{id:'c4',name:'Individual Pack',desc:'12 piezas + bebida',price:11500}],
+  bebidas:      [{id:'b1',name:'Bebida Lata 350ml',desc:'',price:1800},{id:'b2',name:'Agua Mineral 500ml',desc:'',price:1500},{id:'b3',name:'Salsa Unagi Extra',desc:'',price:800},{id:'b4',name:'Salsa Spicy Extra',desc:'',price:800},{id:'b5',name:'Porción Jengibre/Wasabi',desc:'',price:500}]
 };
 
-// =====================
-// STATE
-// =====================
-let cart = {}; // { productId: { qty, note, name, price } }
-let currentBranch = null;
+let cart = {};
+let activeBranch = null;
 
-// =====================
-// INIT
-// =====================
-function initMenu() {
-  Object.entries(MENU).forEach(([cat, products]) => {
-    const grid = document.getElementById('grid-' + cat);
-    if (!grid) return;
-    grid.innerHTML = '';
-    products.forEach(p => {
-      grid.insertAdjacentHTML('beforeend', buildProductCard(p));
+// ── BUILD ──────────────────────────────────────────
+function buildMenus() {
+  Object.entries(MENU).forEach(([cat, items]) => {
+    const list = document.getElementById('list-' + cat);
+    if (!list) return;
+    items.forEach((p, i) => {
+      const div = document.createElement('div');
+      div.className = 'p-card';
+      div.id = 'card-' + p.id;
+      div.style.animationDelay = (i * 0.04) + 's';
+      div.innerHTML = `
+        <div class="p-card-top">
+          <div><div class="p-name">${p.name}</div>${p.desc?`<div class="p-desc">${p.desc}</div>`:''}</div>
+          <div class="p-price">${fmt(p.price)}</div>
+        </div>
+        <div class="p-card-bottom">
+          <div class="qty-wrap">
+            <button class="qty-btn" ontouchstart="" onclick="chQty('${p.id}',-1,'${esc(p.name)}',${p.price})">−</button>
+            <span class="qty-num" id="qty-${p.id}">0</span>
+            <button class="qty-btn" ontouchstart="" onclick="chQty('${p.id}',1,'${esc(p.name)}',${p.price})">+</button>
+          </div>
+          <button class="note-toggle" onclick="togNote('${p.id}')">✏️ Nota</button>
+        </div>
+        <textarea class="note-field" id="note-${p.id}" placeholder="Personalizar este ítem..." rows="2" oninput="updNote('${p.id}')"></textarea>`;
+      list.appendChild(div);
     });
   });
 }
 
-function buildProductCard(p) {
-  return `
-  <div class="product-card" id="card-${p.id}">
-    <div class="product-top">
-      <div>
-        <div class="product-name">${p.name}</div>
-        ${p.desc ? `<div class="product-desc">${p.desc}</div>` : ''}
-      </div>
-      <div class="product-price">${fmt(p.price)}</div>
-    </div>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="qty-control">
-        <button class="qty-btn" onclick="changeQty('${p.id}', -1, '${p.name}', ${p.price})">−</button>
-        <span class="qty-display" id="qty-${p.id}">0</span>
-        <button class="qty-btn" onclick="changeQty('${p.id}', 1, '${p.name}', ${p.price})">+</button>
-      </div>
-      <button class="note-btn" onclick="toggleNote('${p.id}')">✏️ Nota</button>
-    </div>
-    <textarea class="note-input" id="note-${p.id}" placeholder="Personalizar este ítem..." rows="2" oninput="updateNote('${p.id}')"></textarea>
-  </div>`;
-}
-
-// =====================
-// BRANCH
-// =====================
-function selectBranch(branch) {
-  currentBranch = branch;
-  document.querySelectorAll('.branch-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('btn-' + branch).classList.add('active');
-  const b = BRANCHES[branch];
-  document.getElementById('branch-address').innerHTML = `📍 ${b.address}`;
-  document.getElementById('branch-screen').style.display = 'none';
+// ── BRANCH ────────────────────────────────────────
+function selectBranch(b) {
+  activeBranch = b;
+  document.querySelectorAll('.branch-pill').forEach(el => el.classList.remove('active'));
+  document.getElementById('pill-' + b).classList.add('active');
+  document.getElementById('empty-state').style.display = 'none';
   const ms = document.getElementById('menu-section');
-  ms.classList.add('visible');
-  // Reset cart if branch changes
-  cart = {};
-  renderSummary();
-  updateAllCards();
+  ms.style.display = 'block'; ms.classList.add('visible');
+  cart = {}; rehydrate(); renderSummary();
 }
 
-// =====================
-// TABS
-// =====================
-function showCategory(cat, btn) {
-  document.querySelectorAll('.category-section').forEach(s => s.classList.remove('active'));
+// ── TABS ──────────────────────────────────────────
+function showCat(cat, btn) {
+  document.querySelectorAll('.cat-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('cat-' + cat).classList.add('active');
   btn.classList.add('active');
+  btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 }
 
-// =====================
-// CART
-// =====================
-function changeQty(id, delta, name, price) {
-  const current = cart[id] ? cart[id].qty : 0;
-  const newQty = Math.max(0, current + delta);
-  if (newQty === 0) {
-    delete cart[id];
-  } else {
-    cart[id] = { qty: newQty, name, price, note: cart[id] ? cart[id].note : '' };
-  }
-  document.getElementById('qty-' + id).textContent = newQty;
+// ── CART ──────────────────────────────────────────
+function chQty(id, delta, name, price) {
+  const cur = cart[id]?.qty || 0;
+  const nxt = Math.max(0, cur + delta);
+  if (nxt === 0) delete cart[id];
+  else cart[id] = { qty:nxt, name, price, note: cart[id]?.note||'' };
+  const qel = document.getElementById('qty-' + id);
+  if (qel) qel.textContent = nxt;
   const card = document.getElementById('card-' + id);
-  if (newQty > 0) card.classList.add('in-cart');
-  else card.classList.remove('in-cart');
+  if (card) nxt > 0 ? card.classList.add('incart') : card.classList.remove('incart');
   renderSummary();
 }
-
-function updateNote(id) {
-  const val = document.getElementById('note-' + id).value.trim();
-  if (cart[id]) cart[id].note = val;
-  renderSummary();
-}
-
-function toggleNote(id) {
-  const el = document.getElementById('note-' + id);
-  el.classList.toggle('visible');
-  if (el.classList.contains('visible')) el.focus();
-}
-
-function updateAllCards() {
-  Object.keys(MENU).forEach(cat => {
-    MENU[cat].forEach(p => {
-      const qel = document.getElementById('qty-' + p.id);
-      const card = document.getElementById('card-' + p.id);
-      if (qel) {
-        const qty = cart[p.id] ? cart[p.id].qty : 0;
-        qel.textContent = qty;
-        if (qty > 0) card.classList.add('in-cart');
-        else card.classList.remove('in-cart');
-      }
-    });
+function updNote(id) { const v = document.getElementById('note-'+id).value.trim(); if (cart[id]) cart[id].note = v; renderSummary(); }
+function togNote(id) { document.getElementById('note-'+id).classList.toggle('show'); }
+function rehydrate() {
+  Object.values(MENU).flat().forEach(p => {
+    const qel = document.getElementById('qty-'+p.id);
+    const card = document.getElementById('card-'+p.id);
+    if (!qel) return;
+    const q = cart[p.id]?.qty || 0;
+    qel.textContent = q;
+    q > 0 ? card.classList.add('incart') : card.classList.remove('incart');
   });
 }
 
-// =====================
-// SUMMARY
-// =====================
+// ── RENDER SUMMARY ────────────────────────────────
 function renderSummary() {
+  const items = Object.values(cart);
+  const tq = items.reduce((a,b)=>a+b.qty,0);
+  const ta = items.reduce((a,b)=>a+b.qty*b.price,0);
+
+  // badge + totales en la página
+  document.getElementById('item-badge').textContent = tq + (tq===1?' item':' items');
+  document.getElementById('total-amt').textContent = fmt(ta);
+  document.getElementById('bar-total-amt').textContent = fmt(ta);
+  document.getElementById('wa-btn').disabled = tq === 0;
+
+  // resumen inline
   const body = document.getElementById('summary-body');
-  const items = Object.values(cart);
-  const totalItems = items.reduce((a, b) => a + b.qty, 0);
-  const total = items.reduce((a, b) => a + b.qty * b.price, 0);
-
-  document.getElementById('item-count').textContent = totalItems + (totalItems === 1 ? ' item' : ' items');
-  document.getElementById('total-price').textContent = fmt(total);
-
-  const waBtn = document.getElementById('wa-btn');
-  waBtn.disabled = totalItems === 0;
-
-  if (items.length === 0) {
-    body.innerHTML = '<div class="summary-empty">Tu pedido está vacío. ¡Elige tus rolls! 🍱</div>';
-    return;
-  }
-
-  body.innerHTML = items.map(it => `
-    <div class="summary-item">
-      <div>
-        <div class="summary-item-name">${it.qty}× ${it.name}</div>
-        ${it.note ? `<div class="summary-item-note">📝 ${it.note}</div>` : ''}
-      </div>
-      <div class="summary-item-price">${fmt(it.qty * it.price)}</div>
-    </div>
-  `).join('');
+  if (!items.length) { body.innerHTML='<div class="s-empty">Aún no has elegido nada 🍱</div>'; return; }
+  body.innerHTML = items.map(it=>`
+    <div class="s-row">
+      <div><div class="s-name">${it.qty}× ${it.name}</div>${it.note?`<div class="s-note">📝 ${it.note}</div>`:''}</div>
+      <div class="s-price">${fmt(it.qty*it.price)}</div>
+    </div>`).join('');
 }
 
-// =====================
-// WHATSAPP
-// =====================
-function sendWhatsApp() {
-  const name = document.getElementById('customer-name').value.trim();
-  const time = document.getElementById('pickup-time').value;
-  const notes = document.getElementById('extra-notes').value.trim();
-
-  if (!name) { showToast('⚠️ Por favor ingresa tu nombre'); document.getElementById('customer-name').focus(); return; }
-  if (!time) { showToast('⚠️ Por favor elige una hora de retiro'); document.getElementById('pickup-time').focus(); return; }
-
+// ── SHEET ─────────────────────────────────────────
+function openSheet() {
   const items = Object.values(cart);
-  if (items.length === 0) { showToast('⚠️ Tu pedido está vacío'); return; }
+  const ta = items.reduce((a,b)=>a+b.qty*b.price,0);
+  // poblar mini-resumen
+  document.getElementById('sheet-items').innerHTML = items.map(it=>
+    `<div class="ss-row"><span>${it.qty}× ${it.name}</span><span>${fmt(it.qty*it.price)}</span></div>`
+  ).join('');
+  document.getElementById('sheet-total').textContent = fmt(ta);
+  document.getElementById('sheet').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // foco en nombre si está vacío
+  setTimeout(() => {
+    const n = document.getElementById('inp-name');
+    if (!n.value) n.focus();
+  }, 350);
+}
+function closeSheet() {
+  document.getElementById('sheet').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
 
-  const branch = BRANCHES[currentBranch];
-  const total = items.reduce((a, b) => a + b.qty * b.price, 0);
-
-  let msg = `🍣 *PEDIDO AKIKOMO SUSHI*\n`;
-  msg += `📍 Sucursal: *${branch.name}*\n`;
-  msg += `👤 Nombre: *${name}*\n`;
-  msg += `⏰ Retiro: *${formatTime(time)}*\n\n`;
-  msg += `🛒 *Detalle del pedido:*\n`;
-  items.forEach(it => {
-    msg += `• ${it.qty}× ${it.name} — ${fmt(it.qty * it.price)}`;
-    if (it.note) msg += ` _(${it.note})_`;
-    msg += `\n`;
-  });
+// ── SEND WA ───────────────────────────────────────
+function sendWA() {
+  const name  = document.getElementById('inp-name').value.trim();
+  const time  = document.getElementById('inp-time').value;
+  const extra = document.getElementById('inp-extra').value.trim();
+  const items = Object.values(cart);
+  if (!name)  { toast('⚠️ Ingresa tu nombre');       document.getElementById('inp-name').focus(); return; }
+  if (!time)  { toast('⚠️ Elige una hora de retiro'); document.getElementById('inp-time').focus(); return; }
+  const branch = BRANCHES[activeBranch];
+  const total  = items.reduce((a,b)=>a+b.qty*b.price,0);
+  let msg = `🍣 *PEDIDO AKIKOMO SUSHI*\n📍 Sucursal: *${branch.name}*\n👤 Nombre: *${name}*\n⏰ Retiro: *${fmtTime(time)}*\n\n🛒 *Detalle:*\n`;
+  items.forEach(it => { msg += `• ${it.qty}× ${it.name} — ${fmt(it.qty*it.price)}`; if(it.note) msg+=` _(${it.note})_`; msg+='\n'; });
   msg += `\n💰 *TOTAL: ${fmt(total)}*`;
-  if (notes) msg += `\n\n📝 *Instrucciones:* ${notes}`;
-
-  const url = `https://wa.me/${branch.phone.replace('+', '')}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
-
-  showToast('✅ ¡Pedido enviado! Redirigiendo...');
-  setTimeout(() => { window.location.reload(); }, 2500);
+  if (extra) msg += `\n\n📝 *Instrucciones:* ${extra}`;
+  window.open(`https://wa.me/${branch.phone}?text=${encodeURIComponent(msg)}`, '_blank');
+  toast('✅ ¡Pedido enviado! Redirigiendo...');
+  setTimeout(() => window.location.reload(), 2600);
 }
 
-// =====================
-// HELPERS
-// =====================
-function fmt(n) {
-  return '$' + n.toLocaleString('es-CL');
-}
+// ── HELPERS ───────────────────────────────────────
+function fmt(n)    { return '$' + n.toLocaleString('es-CL'); }
+function fmtTime(t){ if(!t) return ''; const [h,m]=t.split(':').map(Number); return `${h%12||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`; }
+function esc(s)    { return s.replace(/'/g,"\\'"); }
+function toast(msg){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2800); }
 
-function formatTime(t) {
-  if (!t) return '';
-  const [h, m] = t.split(':');
-  const hour = parseInt(h);
-  const ampm = hour >= 12 ? 'PM' : 'AM';
-  const h12 = hour % 12 || 12;
-  return `${h12}:${m} ${ampm}`;
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
-}
-
-// =====================
-// BOOT
-// =====================
-initMenu();
+buildMenus();
 </script>
 </body>
 </html>
